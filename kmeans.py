@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 def K_Means_Clustering():
     # k = pre-specified
@@ -24,18 +25,21 @@ def K_Means_Clustering():
     Grouping_matrix = []
 
     while not (solved):
-        print(f'Iteration: {iteration_count}')
         # 1. Determine centroid coordinates
         if len(centroid_coords) == 0:
-            if input('Custom centroids? (Y/N)\n> ').lower() == 'y':
-                print('Enter centroid coordinates. Use a comma as a seperator.')
+            if input('Custom Centroids? (Y/N)\n> ').lower() == 'y':
+                print('Enter centroid coordinates. '
+                      '\n  *Use only a comma as a seperator.')
                 for i in range(k):
-                    centroid_coords.append(input('> '))
+                    centroid_coords.append(tuple(map(float, input('> ').split(','))))
             else:
                 for i in range(k):
                     centroid_coords.append(coords[i])
-
+            
+            print('________________________________________________________________\n' 
+                  f'Iteration: {iteration_count}')
         else:
+            print(f'Iteration: {iteration_count}')
             temp = []
             for row in range(k):
                 temp_x = 0.00
@@ -44,10 +48,10 @@ def K_Means_Clustering():
                 for item_index in range(len(Grouping_matrix[row])):
                     if Grouping_matrix[row][item_index] == 1:
                         temp_x += float(coords[item_index][0])
+
                         temp_y += float(coords[item_index][1])
                         counter += 1
                 temp.append(tuple([np.round(temp_x/counter, 2), np.round(temp_y/counter, 2)]))
-                    
             centroid_coords = temp.copy()
         
         # 2. Determine distance from each object to centroid (Dn-Matrix)
@@ -79,10 +83,21 @@ def K_Means_Clustering():
         # Output
         if solved: 
             print(f'Solved: {solved}')
-            print(f'Coordinates: {coords}\n')
+        print(f'\nCoordinates: {coords}\n')
         print(f'Centroid Coordinates: {centroid_coords}')
         print(f'Distance Matrix: {Distance_matrix}')
         print(f'Grouping Matrix: {Grouping_matrix}\n' \
               f'________________________________________________________________')
 
         iteration_count += 1
+    
+    x_vals = []
+    y_vals = []
+    # PLOT ITEMS
+    for coord in coords:
+        x_vals.append(coord[0])
+        y_vals.append(coord[1])
+
+    plt.plot(np.array(x_vals), np.array(y_vals), 'o')
+    plt.grid()
+    plt.show()

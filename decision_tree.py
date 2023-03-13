@@ -41,7 +41,7 @@ def select_feature(data: pd.DataFrame) -> tuple[float, str, float, float]:
     best_feature = None
     best_gain = 0.0
     for feature in features:
-        gain = info_gain(data, feature)[-1]
+        gain = info_gain(data, feature)[-1] 
         if gain > best_gain:
             best_gain = gain
             best_feature = feature
