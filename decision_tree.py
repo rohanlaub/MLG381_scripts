@@ -45,6 +45,8 @@ def select_feature(data: pd.DataFrame) -> tuple[float, str, float, float]:
         if gain > best_gain:
             best_gain = gain
             best_feature = feature
+
+    print(f'Split on {best_feature} : {best_gain}\n*Next block of calculations are for the leaves of the current split\n')
     
     return info_gain(data, best_feature)
 
