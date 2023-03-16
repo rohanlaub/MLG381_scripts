@@ -4,6 +4,7 @@ import pandas as pd
 import kmeans as o1
 import decision_tree as o2
 import regression as o3
+import naive_bayes as o4
 
 def Main():
     end = False
@@ -12,8 +13,10 @@ def Main():
         print('''
  ===== Menu: =====
 1. K-Means Clustering
-2. Process Decision Tree \n\t*if any values are NaN, check if your input.csv file is correct
+2. Process Decision Tree
+    *if any values are NaN, check if your input.csv file is correct
 3. Linear Regression
+4. Naive Bayes Classifier
 q | quit
 ______________________''')
 
@@ -44,6 +47,12 @@ ______________________''')
 
         if prompt == '3':
             o3.Linear_Regression()
+
+        if prompt == '4.0':
+            o4.sample_file()
+
+        if prompt == '4':
+            o4.Naive_Bayes()
 
 if __name__ == "__main__":
     Main()

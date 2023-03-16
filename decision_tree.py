@@ -16,7 +16,7 @@ def entropy(data: pd.DataFrame) -> float:
     entropy = 0.0
     for count in counts.values():
         p = count / len(labels)
-        entropy -= p * np.log2(p)
+        entropy -= round(p * np.log2(p),5)
     return entropy
 
 # Function to calculate information gain for a feature
@@ -25,11 +25,11 @@ def info_gain(data: pd.DataFrame, feature: str) -> tuple[float, str, float, floa
     E_SX = 0.0
     for value in values:
         subset = data[data[feature] == value]
-        E_SX += len(subset) / len(data) * entropy(subset)
+        E_SX += round(len(subset) / len(data) * entropy(subset),5)
         print(f'Sv/S: {len(subset)} / {len(data)}\tS({value}) {entropy(subset)}')
 
     E_S = entropy(data)
-    I_SX = E_S - E_SX
+    I_SX = round(E_S - E_SX, 5)
 
     # OUTPUT CALCULATIONS
     print(f'E(S): {E_S}\nE(S,{feature}): {E_SX}\nI(S,{feature}): {I_SX}\n')
@@ -69,7 +69,6 @@ def build_tree(data: pd.DataFrame, indent: int=0) -> Node:
 
 # Function to print the decision tree
 def print_tree(node: Node, indent: int=0) -> str:
-
     if node.data is None:
         print(f'{"  "* indent}-> {node.label}')
     else:
