@@ -56,7 +56,9 @@ def Naive_Bayes() -> None:
                 if row[Headings[X_item]] == X[X_item] and C[idx] == i[Ci]:
                     countX_given_Ci += 1
 
-            P_Xk_Ci = round(countX_given_Ci / i_counts[Ci],3)
+            if countX_given_Ci == 0:
+                P_Xk_Ci = round(countX_given_Ci+1 / i_counts[Ci]+len(np.unique(X_data[Headings[X_item]].tolist())),3)
+
             print(f'P({Headings[X_item]} = {X[X_item]} | {Headings[-1]} = {i[Ci]}) '
                   f'= {countX_given_Ci} / {i_counts[Ci]}\n\t= {P_Xk_Ci}')
             temp_P_XCi *= P_Xk_Ci
@@ -99,7 +101,7 @@ def Naive_Bayes() -> None:
     if not allnull:
         print(f'\n\t.: {Headings[-1]} = {i[P_Ci_X.index(max(P_Ci_X))]} given X:{X}')
     else:
-        print(f'.: ALL NULL VALUES...')
+        print('.: ALL NULL VALUES...')
 
 def sample_file(n: int) -> None:
 
